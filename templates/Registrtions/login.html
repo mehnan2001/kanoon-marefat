@@ -1,0 +1,81 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}ورود{% endblock %}
+
+{% block content %}
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        direction: rtl;
+    }
+
+    .login-box {
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .form-separator {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 2rem 0 1rem;
+    }
+
+    .form-separator::before,
+    .form-separator::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #ccc;
+    }
+
+    .form-separator span {
+        padding: 0 1rem;
+        color: #777;
+        font-size: 0.9rem;
+        white-space: nowrap;
+    }
+
+    .login-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .login-box a {
+        font-size: 0.9rem;
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-box">
+        <form method="post">
+            {% csrf_token %}
+            <div class="login-title">ورود</div>
+
+            {{ form|crispy }}
+
+<!--            <div class="d-flex justify-content-between mt-2">-->
+<!--                <a href="#" class="btn btn-forgot">فراموشی رمز عبور</a>-->
+<!--            </div>-->
+
+            <button type="submit" class="btn btn-success w-100 mt-3">ورود</button>
+
+            <div class="form-separator">
+                <span>یا</span>
+            </div>
+
+            <a href="https://google.com" class="btn btn-outline-primary w-100">ثبت‌نام</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

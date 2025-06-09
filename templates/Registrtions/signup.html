@@ -1,0 +1,155 @@
+{% extends '_base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title  %}
+SignUp Page
+{% endblock %}
+
+{% block content %}
+
+<section class="section-top">
+    <div class="container">
+        <div class="col-lg-10 offset-lg-1 text-center">
+            <div class="section-top-title wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s" data-wow-offset="0">
+                <h1>ثبت نام در سایت</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="formbold-main-wrapper">
+    <div class="formbold-form-wrapper">
+        <form action="" method="POST" class="formbold-form">
+            {% csrf_token %}
+            <div class="formbold-input-flex">
+                <div>{{ form.username | as_crispy_field }}</div>
+                <div>{{ form.email | as_crispy_field }}</div>
+                <div>{{ form.password1 | as_crispy_field }}</div>
+                <div>{{ form.password2 | as_crispy_field }}</div>
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>{{ form.first_name | as_crispy_field }}</div>
+                <div>{{ form.last_name | as_crispy_field }}</div>
+                <div>{{ form.father_name | as_crispy_field }}</div>
+                <div>{{ form.age | as_crispy_field }}</div>
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>{{ form.personal_code | as_crispy_field }}</div>
+                <div>{{ form.phone_number | as_crispy_field }}</div>
+                <div>{{ form.father_phone_number | as_crispy_field }}</div>
+            </div>
+
+            <button class="formbold-btn" type="submit">ثبت نام</button>
+        </form>
+    </div>
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9f9fb;
+  color: #333;
+}
+
+.section-top {
+  padding: 40px 0 20px;
+  background: #6a64f1;
+  color: white;
+  text-align: center;
+}
+
+.section-top h1 {
+  font-weight: 700;
+  font-size: 2.5rem;
+}
+
+.formbold-main-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 30px 15px 60px;
+}
+
+.formbold-form-wrapper {
+  background: white;
+  padding: 40px 35px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
+  max-width: 700px;
+  width: 100%;
+}
+
+.formbold-input-flex {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.formbold-input-flex > div {
+  flex: 1 1 45%;
+  min-width: 200px;
+}
+
+.formbold-form-input {
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1.5px solid #dde3ec;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formbold-form-input:focus {
+  border-color: #6a64f1;
+  box-shadow: 0 0 8px rgba(106, 100, 241, 0.4);
+}
+
+.formbold-btn {
+  width: 100%;
+  background-color: #6a64f1;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 15px;
+}
+
+.formbold-btn:hover {
+  background-color: #5753d6;
+  box-shadow: 0 8px 20px rgba(106, 100, 241, 0.4);
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .formbold-input-flex {
+    flex-direction: column;
+  }
+
+  .formbold-input-flex > div {
+    flex: 1 1 100%;
+  }
+
+  .section-top h1 {
+    font-size: 2rem;
+  }
+}
+</style>
+
+{% endblock %}

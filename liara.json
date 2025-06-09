@@ -1,0 +1,13 @@
+{
+  "app": "kanoon-marefat",
+  "port": 80,
+  "build": {
+    "location": "iran"
+  },
+  "disks": [
+    {
+      "name": "kanoon-disk",
+      "mountTo": "meida"
+    }
+  ]
+}

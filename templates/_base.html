@@ -1,0 +1,257 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>{% block title %}صفحه من{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Sans&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+  <style>
+    /* پایه‌ای برای کل صفحه */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inria Sans', sans-serif;
+    }
+    body {
+      padding-top: 70px; /* برای هدر فیکس */
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: #2c3e50;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 9999;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    header .logo img {
+      max-height: 40px;
+      cursor: pointer;
+    }
+    nav.main-nav {
+      display: flex;
+      gap: 20px;
+    }
+    nav.main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    nav.main-nav a:hover {
+      color: #3498db;
+    }
+    .header-actions a, .header-actions form button {
+      margin-left: 15px;
+      padding: 7px 15px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      color: white;
+    }
+    .header-actions a.login-btn {
+      background: transparent;
+      border: 1px solid white;
+    }
+    .header-actions a.login-btn:hover {
+      background: white;
+      color: #2c3e50;
+    }
+    .header-actions a.signup-btn {
+      background: #3498db;
+    }
+    .header-actions a.signup-btn:hover {
+      background: #217dbb;
+    }
+    .header-actions form button.logout-btn {
+      background: #e74c3c;
+    }
+    .header-actions form button.logout-btn:hover {
+      background: #c0392b;
+    }
+
+    /* منوی همبرگری */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 25px;
+      height: 20px;
+      cursor: pointer;
+    }
+    .hamburger span {
+      display: block;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* منوی موبایل */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 70px;
+      right: 0;
+      width: 100%;
+      background: #2c3e50;
+      padding: 20px;
+      z-index: 9998;
+    }
+    .mobile-menu.active {
+      display: flex;
+    }
+    .mobile-menu a, .mobile-menu form button {
+      color: white;
+      padding: 10px 15px;
+      text-align: center;
+      text-decoration: none;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      display: block;
+      font-weight: 600;
+    }
+    .mobile-menu a:hover, .mobile-menu form button:hover {
+      background: #3498db;
+    }
+
+    /* تغییر آیکون همبرگر به ضربدر */
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* ریسپانسیو */
+    @media (max-width: 768px) {
+      nav.main-nav, .header-actions {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* فوتر */
+    footer {
+      background: #2c3e50;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+    footer .social-icons a {
+      color: white;
+      margin: 0 10px;
+      font-size: 20px;
+      transition: color 0.3s;
+      text-decoration: none;
+    }
+    footer .social-icons a:hover {
+      color: #3498db;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="{% url 'all_courses' %}" class="logo">
+    <img src="{% static 'img/logo1.jpg' %}" alt="لوگو معرفت" />
+  </a>
+
+  <nav class="main-nav">
+    <a href="{% url 'all_courses' %}">خانه</a>
+  </nav>
+
+  <div class="header-actions">
+    {% if user.is_authenticated %}
+      <form method="post" action="{% url 'logoutPage' %}">
+        {% csrf_token %}
+        <b style="color: tomato;">{{ user.username }}</b>
+        <button type="submit" class="logout-btn">خروج</button>
+      </form>
+    {% else %}
+      <a href="{% url 'loginPage' %}" class="login-btn">ورود</a>
+      <a href="{% url 'signupPage' %}" class="signup-btn">ثبت‌نام</a>
+    {% endif %}
+  </div>
+
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="{% url 'all_courses' %}">خانه</a>
+  {% if user.is_authenticated %}
+    <form method="post" action="{% url 'logoutPage' %}">
+      {% csrf_token %}
+      <b style="color: tomato;">{{ user.username }}</b><br />
+      <button type="submit" class="logout-btn mobile-logout-btn">خروج</button>
+    </form>
+  {% else %}
+    <a href="{% url 'loginPage' %}" class="login-btn">ورود</a>
+    <a href="{% url 'signupPage' %}" class="signup-btn">ثبت‌نام</a>
+  {% endif %}
+</div>
+
+{% block content %}
+<!-- محتوای صفحه اینجا -->
+{% endblock %}
+
+<footer>
+
+  <div style="margin-top: 20px; font-size: 14px;">
+    <p>آدرس: اصفهان - خیابان قائمیه - کوچه 127 - مسجدالمهدی (عج)</p>
+    <p>تلفن تماس: 09133899865</p>
+      <a href="https://eitaa.com/masjedalmahde" style="color:white;">کانال ایتا مسجدالمهدی(عج)</a>
+  </div>
+</footer>
+
+<script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+  });
+
+  // بستن منو هنگام کلیک روی لینک‌ها
+  mobileMenu.addEventListener('click', e => {
+    if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+    }
+  });
+</script>
+
+</body>
+</html>
