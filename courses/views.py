@@ -1,6 +1,9 @@
+from django.contrib.messages.context_processors import messages
 from django.db.models import Q
 from django.views import generic
 from django.urls import reverse_lazy
+from django.contrib import messages
+
 from . import forms
 
 from .models import CourseModel as Course
@@ -40,7 +43,7 @@ class CourseAddView(generic.CreateView):
     success_url = reverse_lazy('all_courses')  # Redirect to the list of courses after adding a new one
 
     def form_valid(self, form):
-        # You can add custom logic here if needed
+        messages.success(self.request, f'پست جدید با موفقیت اضافه شد.')
         return super().form_valid(form)
 
 
@@ -57,6 +60,7 @@ class CourseUpdateView(generic.UpdateView):
         return context
 
     def form_valid(self, form):
+        messages.success(self.request, f'پست با موفقیت ویرایش شد.')
         return super().form_valid(form)
 
 
@@ -64,3 +68,9 @@ class CourseDeleteView(generic.DeleteView):
     model = Course
     template_name = 'courses/course_confirm_delete.html'  # صفحه تایید حذف
     success_url = reverse_lazy('all_courses')  # به کجا بره بعد از حذف موفق
+
+    def form_valid(self, form):
+        messages.success(self.request, f'پست با موفقیت حذف شد.')
+        return super().form_valid(form)
+
+

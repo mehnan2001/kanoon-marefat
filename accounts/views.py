@@ -3,6 +3,7 @@ from django.views import generic
 from django import forms as frm
 from .forms import CustomUserCreationForm
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 from .models import CustomUser
 
@@ -12,7 +13,6 @@ class SignUpView(generic.CreateView):
     template_name = 'Registrtions/signup.html'
     model = CustomUser
     success_url = reverse_lazy('loginPage')
-
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -30,16 +30,18 @@ class SignUpView(generic.CreateView):
 
         return form
 
-
     def form_valid(self, form):
+        messages.success(self.request, 'ثبت نام با موفقیت انجام شد. لطفا وارد شوید.')
         return super().form_valid(form)
 
 
 class LoginPageView(LoginView):
-
     template_name = 'Registrtions/login.html'
     model = CustomUser
     success_url = reverse_lazy('all_courses')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'با موفقیت وارد شدید.')
+        return super().form_valid(form)
 
 
